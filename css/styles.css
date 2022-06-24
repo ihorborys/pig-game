@@ -1,0 +1,243 @@
+@font-face {
+    font-family: "Orbitron";
+    src: url(../assets/fonts/Orbitron-Regular.ttf) format("ttf");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Orbitron";
+    src: url(../assets/fonts/Orbitron-Medium.ttf) format("ttf");
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: "Orbitron";
+    src: url(../assets/fonts/Orbitron-SemiBold.ttf) format("ttf");
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: "Orbitron";
+    src: url(../assets/fonts/Orbitron-Bold.ttf) format("ttf");
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: "Orbitron";
+    src: url(../assets/fonts/Orbitron-ExtraBold.ttf) format("ttf");
+    font-weight: 800;
+}
+
+@font-face {
+    font-family: "Orbitron";
+    src: url(../assets/fonts/Orbitron-Black.ttf) format("ttf");
+    font-weight: 900;
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    background-image: url(../assets/images/back.jpg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover; 
+}
+
+body {
+    --red: #eb4d4d;
+    --text-color-active: #212F3D;
+    font-family: "Orbitron", sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    position: relative;
+    width: 1000px;
+    height: 600px;
+    display: flex;
+    color: var(--text-color-active);
+}
+
+.player {
+    width: 50%;
+    height: 100%;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+.player + .player {
+    background-color: #EAECEE;
+}
+
+/* -----------------------------MENU----------------------------- */
+
+.menu {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 20%;
+    height: 100%;
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.new-game {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    top: 80px;
+    cursor: pointer;
+} 
+
+.new-game:hover span {
+    font-weight: 600;
+    transform: translateX(5px);
+    color: var(--red);
+}
+
+.new-game:hover i {
+    transform: translateX(5px);
+    color: var(--red);
+}
+
+.new-game span {
+    text-transform:uppercase;
+    transition: all 0.3s;
+}
+
+.new-game i {
+    margin-right: 10px;
+    font-size: 30px;
+    transition: all 0.3s;
+}
+
+.dice {
+    position: absolute;
+    top: 190px; 
+}
+
+.dice img {
+    height: 140px;
+    width: 140px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 30px rgb(0, 0, 0, 0.5)
+}
+
+.roll-dice {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    bottom: 165px;
+    cursor: pointer;
+}
+
+.roll-dice span {
+    text-transform: uppercase;
+    transition: all 0.3s;
+}
+
+.roll-dice i {
+    margin-right: 10px;
+    font-size: 30px;
+    transition: all 0.3s;
+}
+
+.roll-dice:hover span {
+    font-weight: 600;
+    transform: translateX(5px);
+    color: var(--red);
+}
+
+.roll-dice:hover i {
+    transform: translateX(-5px) rotate(180deg);
+    color: var(--red);
+}
+
+.hold {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    bottom: 115px;
+    cursor: pointer;
+}
+
+.hold span {
+    text-transform: uppercase;
+    transition: all 0.3s;
+}
+
+.hold i {
+    margin-right: 10px;
+    font-size: 30px;
+    transition: all 0.3s;
+}
+
+.hold:hover span {
+    font-weight: 600;
+    transform: translateY(5px);
+    color: var(--red);
+}
+
+.hold:hover i {
+    transform: translateY(5px);
+    color: var(--red);
+}
+
+/* -----------------------------MENU----------------------------- */
+
+.playerscore {
+    width: 50%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.name {
+    font-weight: 600;
+    font-size: 35px;
+    margin-top: 20px;
+}
+
+.totalscore {
+    font-size: 50px;
+    color: var(--red);
+    margin-top: 40px;
+}
+
+.currentscore {
+    width: 50%;
+    padding: 15px;
+    background-color: var(--red);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+.text {
+    font-size: 25px;
+    font-style: italic;
+}
+
+.score {
+    font-size: 30px;
+    font-style: italic;
+    color: #fff;
+}
