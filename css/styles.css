@@ -80,6 +80,11 @@ body {
     opacity: 0.8;
 }
 
+.active {
+    background-color: #EAECEE;
+    opacity: 1;
+}
+
 /* -----------------------------MENU----------------------------- */
 
 .menu {
