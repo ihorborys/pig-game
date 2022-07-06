@@ -85,6 +85,15 @@ body {
     opacity: 1;
 }
 
+.winner {
+    background-color: var(--red);
+    color: #fff;
+}
+
+.winner .totalscore {
+    color: #fff;
+}
+
 /* -----------------------------MENU----------------------------- */
 
 .menu {
@@ -106,6 +115,7 @@ body {
     align-items: center;
     top: 80px;
     cursor: pointer;
+    z-index: 10;
 } 
 
 .new-game:hover span {
@@ -119,9 +129,15 @@ body {
     color: var(--red);
 }
 
+.winner ~ .menu .new-game:hover span,
+.winner ~ .menu .new-game:hover i {
+    color: #212F3D;
+}
+
 .new-game span {
-    text-transform:uppercase;
+    text-transform: uppercase;
     transition: all 0.3s;
+    z-index: 10;
 }
 
 .new-game i {
@@ -211,16 +227,17 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    transition: all 0.9s ease-in;
 }
 
-.name {
+.player-name {
     font-weight: 600;
     font-size: 35px;
     margin-top: 20px;
 }
 
 .totalscore {
-    font-size: 50px;
+    font-size: 64px;
     color: var(--red);
     margin-top: 40px;
 }
