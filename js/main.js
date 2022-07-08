@@ -1,17 +1,21 @@
+import { initCube, rotateCube } from "./cube.js";
+
 const newGameButton = document.querySelector(".new-game");
 const players = document.querySelectorAll(".player");
-const dice = document.querySelector(".dice");
-const diceImg = dice.children[0];
+const cubeContainer = document.querySelector(".cube-container");
 const rollDiceButton = document.querySelector(".roll-dice");
 const holdButton = document.querySelector(".hold");
 const winScore = 10;
 let currentScore = 0;
+let cubeSide = 1;
 let activePlayer;
 
+const cube = initCube();
 
 newGameButton.addEventListener("click", onStartNewGameBtnClick);
 rollDiceButton.addEventListener("click", onRollDiceBtnClick);
 holdButton.addEventListener("click", onHoldBtnClick);
+cube.addEventListener("transitionend", onTransitionEnd);
 
 // const bgSound = new Audio("../assets/sounds/background-sound.mp3");
 // bgSound.autoplay = true;
@@ -20,10 +24,6 @@ holdButton.addEventListener("click", onHoldBtnClick);
 // }, true)
 
 // playSound("../assets/sounds/background-sound.mp3", true);
-
-function getRandomNumber(topValue) {
-    return Math.floor(Math.random() * topValue) + 1;
-}
 
 function onStartNewGameBtnClick() {
     players[0].classList.add("active");
@@ -36,20 +36,19 @@ function onStartNewGameBtnClick() {
     playSound("../assets/sounds/new-game-sound.mp3");
 }
 
-function onRollDiceBtnClick() {
-    const randomNumber = getRandomNumber(6);
-    
-    // const srcValue = "./assets/images/dice-" + imgNumber + ".png";
-    const srcValue = `./assets/images/dice-${randomNumber}.png`;
-    diceImg.setAttribute("src", srcValue);
-    
-    if (randomNumber === 1) {
+function onRollDiceBtnClick() {  
+    cubeSide = rotateCube(cube);
+        
+    playSound("../assets/sounds/roll-dice-sound.mp3");
+}
+
+function onTransitionEnd() {
+    if (cubeSide === 1) {
         resetCurrentScore();
         toggleActivePlayer();
     } else {
-        updateCurrentScore(randomNumber);
+        updateCurrentScore(cubeSide);
     }
-    playSound("../assets/sounds/roll-dice-sound.mp3");
 }
 
 function playSound(url, loop = false) {
@@ -114,11 +113,11 @@ function resetTotalScore() {
 
 function togglePlayableUI(showUI) {
     if (showUI) {
-        dice.style.display = "block";
+        cubeContainer.style.display = "block";
         rollDiceButton.style.display = "flex";
         holdButton.style.display = "flex";
     } else {
-        dice.style.display = "none";
+        cubeContainer.style.display = "none";
         rollDiceButton.style.display = "none";
         holdButton.style.display = "none";
     };
