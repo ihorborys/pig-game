@@ -2,7 +2,7 @@ import { getRandom } from "./utils.js";
 
 const MIN = 1;
 const MAX = 6;
-const DEG = 720;
+const DEG = 360;
 
 const cubeSidesList = [
     { name: "front", rotation: [0, 0] },

@@ -1,20 +1,30 @@
 import { initCube, rotateCube } from "./cube.js";
+import { initSettings, toggleSettings } from "./settings.js";
 
-const newGameButton = document.querySelector(".new-game");
 const players = document.querySelectorAll(".player");
 const cubeContainer = document.querySelector(".cube-container");
+const newGameButton = document.querySelector(".new-game");
 const rollDiceButton = document.querySelector(".roll-dice");
 const holdButton = document.querySelector(".hold");
+const settingsButton = document.querySelector(".settings-button");
+const audio = document.querySelector("audio");
 const winScore = 10;
 let currentScore = 0;
 let cubeSide = 1;
 let activePlayer;
 
 const cube = initCube();
+const settings = initSettings();
 
 newGameButton.addEventListener("click", onStartNewGameBtnClick);
 rollDiceButton.addEventListener("click", onRollDiceBtnClick);
 holdButton.addEventListener("click", onHoldBtnClick);
+settingsButton.addEventListener("click", onSettingsBtnClick);
+newGameButton.addEventListener("mouseenter", onMouseEnter);
+rollDiceButton.addEventListener("mouseenter", onMouseEnter);
+holdButton.addEventListener("mouseenter", onMouseEnter);
+settingsButton.addEventListener("mouseenter", onMouseEnter);
+audio.addEventListener("mouseenter", onMouseEnter);
 cube.addEventListener("transitionend", onTransitionEnd);
 
 // const bgSound = new Audio("../assets/sounds/background-sound.mp3");
@@ -64,6 +74,10 @@ function playSound(url, loop = false) {
     }
 }
 
+function onMouseEnter() {
+    playSound("../assets/sounds/hover-button-sound.mp3");
+}
+
 // function onButtonSoundClick() {
 //     let buttonSound = `./assets/sounds/roll-dice-sound.mp3`;
 //     buttonSound.play();
@@ -79,6 +93,11 @@ function onHoldBtnClick() {
     }
     resetCurrentScore();
     playSound("../assets/sounds/hold-sound.mp3");
+}
+
+function onSettingsBtnClick() {
+    toggleSettings(settings.settingsContainer, settings.settingsContent);
+    playSound("../assets/sounds/settings-sound.mp3");
 }
 
 function updateCurrentScore(randomNumber) {
