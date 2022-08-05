@@ -7,38 +7,46 @@ const cubeContainer = document.querySelector(".cube-container");
 const newGameButton = document.querySelector(".new-game");
 const rollDiceButton = document.querySelector(".roll-dice");
 const holdButton = document.querySelector(".hold");
-const settingsForm = document.querySelector(".settings-content form")
-// const settingsButton = document.querySelector(".settings-button");
+const settingsForm = document.querySelector(".settings-content form");
+const radioButtons = document.querySelectorAll(".total-score-toggle input");
+const textInputs = document.querySelectorAll(".name-input");
+const errorMessages = document.querySelectorAll(".error-message");
 const audio = document.querySelector("audio");
-const winScore = 10;
+
+
+let winScore = 100;
 let currentScore = 0;
 let cubeSide = 1;
 let activePlayer;
 
+const specialSymbols = "!?@#$_%;,.";
+const messages = {
+    min: "Entered name is too short. Minimum 3 symbols required",
+    max: "Entered name is too long. Maximum 30 symbols required",
+    empty: "Empty names are not allowed",
+    special: "Symbols like:  " + specialSymbols + "  are not allowed",
+}
+
 const cube = initCube();
 const settings = initSettings();
+initListeners();
 
-newGameButton.addEventListener("click", onStartNewGameBtnClick);
-rollDiceButton.addEventListener("click", onRollDiceBtnClick);
-holdButton.addEventListener("click", onHoldBtnClick);
-settingsForm.addEventListener("submit", onSubmitSettingsForm);
-// settingsButton.addEventListener("click", onSettingsBtnClick);
-newGameButton.addEventListener("mouseenter", onMouseEnter);
-rollDiceButton.addEventListener("mouseenter", onMouseEnter);
-holdButton.addEventListener("mouseenter", onMouseEnter);
-// settingsButton.addEventListener("mouseenter", onMouseEnter);
-audio.addEventListener("mouseenter", onMouseEnter);
-cube.addEventListener("transitionend", onTransitionEnd);
+function initListeners() {
+    newGameButton.addEventListener("click", onStartNewGameBtnClicked);
+    rollDiceButton.addEventListener("click", onRollDiceBtnClicked);
+    holdButton.addEventListener("click", onHoldBtnClicked);
+    settingsForm.addEventListener("submit", onSettingsFormSubmited);
+    newGameButton.addEventListener("mouseenter", onMouseEntered);
+    rollDiceButton.addEventListener("mouseenter", onMouseEntered);
+    holdButton.addEventListener("mouseenter", onMouseEntered);
+    audio.addEventListener("mouseenter", onMouseEntered);
+    cube.addEventListener("transitionend", onTransitionEnd);
+    radioButtons.forEach((button) => {
+        button.addEventListener("change", onRadioButtonChanged);
+    })
+}
 
-// const bgSound = new Audio("../assets/sounds/background-sound.mp3");
-// bgSound.autoplay = true;
-// bgSound.addEventListener("load", function() {
-//     bgSound.play()
-// }, true)
-
-// playSound("../assets/sounds/background-sound.mp3", true);
-
-function onStartNewGameBtnClick() {
+function onStartNewGameBtnClicked() {
     players[0].classList.add("active");
     players[1].classList.remove("active");
     activePlayer = players[0];
@@ -50,7 +58,7 @@ function onStartNewGameBtnClick() {
     playSound("../assets/sounds/new-game-sound.mp3");
 }
 
-function onRollDiceBtnClick() {  
+function onRollDiceBtnClicked() {  
     cubeSide = rotateCube(cube);
     playSound("../assets/sounds/roll-dice-sound.mp3");
 }
@@ -63,6 +71,12 @@ function onTransitionEnd() {
         updateCurrentScore(cubeSide);
     }
 }
+
+function onRadioButtonChanged(event) {
+    const id = event.target.id;
+    winScore = parseInt(id);
+}
+
 
 function playSound(url, loop = false) {
     const buttonAudio = new Audio(url);
@@ -77,7 +91,7 @@ function playSound(url, loop = false) {
     }
 }
 
-function onMouseEnter() {
+function onMouseEntered() {
     playSound("../assets/sounds/hover-button-sound.mp3");
 }
 
@@ -86,7 +100,7 @@ function onMouseEnter() {
 //     buttonSound.play();
 // }
 
-function onHoldBtnClick() {
+function onHoldBtnClicked() {
     const totalScore = updateTotalScore();
     if (totalScore >= winScore) {      
         togglePlayableUI(false);        
@@ -103,14 +117,22 @@ function showHideSetings() {
     playSound("../assets/sounds/settings-sound.mp3");
 }
 
-function onSubmitSettingsForm(e) {
+function onSettingsFormSubmited(e) {
     e.preventDefault();
     const formData = new FormData(settingsForm);
-    const inputValues = formData.getAll("player-name");
+    const inputValues = formData.getAll("player-name"); // ["@##", "sdfvsdfvsdv"]
+    let inputsValidated = [false, false];
     playerNames.forEach((name, i) => {
-        name.innerHTML = inputValues[i];
+        const validated = validateInputs(inputValues[i], i);
+        inputsValidated[i] = validated; // 1: false 2: true
+        if (validated) {
+            name.innerHTML = inputValues[i];
+            textInputs[i].value = "";
+        }
     });
-    showHideSetings();
+    if (inputsValidated[0] && inputsValidated[1]) {
+        showHideSetings();
+    }
 }
 
 function updateCurrentScore(randomNumber) {
@@ -198,3 +220,31 @@ function resetPlayers() {
     });
 }
 
+function validateInputs(inputText, inputIndex) {
+    const specialSymbolsArray = specialSymbols.split("");
+    const inputTextArray = inputText.split("");
+
+    if (inputText === "") {
+        errorMessages[inputIndex].innerHTML = messages.empty;  
+        return false;
+    }
+    if (inputText.length < 3) {
+        errorMessages[inputIndex].innerHTML = messages.min;  
+        return false;
+    }
+    if (inputText.length > 30) {
+        errorMessages[inputIndex].innerHTML = messages.max;  
+        return false;
+    }
+    for (let i = 0; i < inputTextArray.length; i++) {
+        for (let j = 0; j < specialSymbolsArray.length; j++) {
+            if (inputTextArray[i] === specialSymbolsArray[j]) {
+                errorMessages[inputIndex].innerHTML = messages.special;  
+                return false;
+            }
+        }       
+    }
+    
+    errorMessages[inputIndex].innerHTML = "";
+    return true;
+}

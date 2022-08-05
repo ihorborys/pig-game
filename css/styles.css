@@ -147,7 +147,6 @@ body {
     transition: all 0.3s;
 }
 
-
 .roll-dice {
     display: none;
     position: absolute;
@@ -352,16 +351,19 @@ body {
 }
 
 .settings-content input {
-    height: 30px;
     font-family: "Orbitron", sans-serif;
     border-radius: 5px;
     border: none;
 }
 
+.settings-content input[type="text"],
+.settings-content input[type="submit"] {
+    height: 30px;
+}
+
 .settings-content input[type="text"] {
     width: 100%;
     margin-top: 5px;
-    margin-bottom: 20px;
     padding-left: 10px;
     border: 1px solid #d3d3d3;
 }
@@ -378,8 +380,9 @@ body {
 }
 
 .settings-content label {
+    display: block;
     font-weight: 700;
-    margin-bottom: 5px;
+    margin-bottom: 20px;
     color:#212F3D;
 }
 
@@ -412,6 +415,34 @@ body {
 .settings-button i {
     transition: all 0.3s;
     font-size: 24px;
+}
+
+.total-score-toggle {
+    margin-top: 60px;
+}
+
+.total-score-toggle label {
+    margin-bottom: 0px;
+    margin-left: 5px;
+}
+
+.total-score-toggle > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.total-score-toggle > div > div {
+    display: flex;
+    align-items: center;
+}
+
+.error-message {
+    line-height: 8px;
+    font-weight: 500;
+    font-size: 8px;
+    color: red;
 }
 
 audio {

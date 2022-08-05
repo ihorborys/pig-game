@@ -51,12 +51,37 @@
             <div class="settings-content">
                 <form action="">
                     <div>
-                        <label>Player 1 name
-                            <input type="text" name="player-name" placeholder="Enter first player name...">
-                        </label>
-                        <label>Player 2 name
-                            <input type="text" name="player-name" placeholder="Enter second player name...">
-                        </label>
+                        <div class="player-name-container">
+                            <label>Player 1 name
+                                <input class="name-input" type="text" name="player-name" placeholder="Enter first player name...">
+                                <span class="error-message"></span>
+                            </label>
+                            <label>Player 2 name
+                                <input class="name-input" type="text" name="player-name" placeholder="Enter second player name...">
+                                <span class="error-message"></span>
+                            </label>
+                        </div>
+                        <div class="total-score-toggle">
+                            <h4>Choose total score</h4>
+                            <div>
+                                <div>
+                                    <input type="radio" id="25" name="total">
+                                    <label for="25">25</label>
+                                </div>
+                                <div>
+                                    <input type="radio" id="50" name="total">
+                                    <label for="50">50</label>
+                                </div>
+                                <div>
+                                    <input type="radio" id="75" name="total">
+                                    <label for="75">75</label>
+                                </div>
+                                <div>
+                                    <input type="radio" id="100" name="total" checked>
+                                    <label for="100">100</label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <input type="submit" value="SAVE">
                 </form>
