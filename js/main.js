@@ -2,11 +2,13 @@ import { initCube, rotateCube } from "./cube.js";
 import { initSettings, toggleSettings } from "./settings.js";
 
 const players = document.querySelectorAll(".player");
+const playerNames = document.querySelectorAll(".player-name");
 const cubeContainer = document.querySelector(".cube-container");
 const newGameButton = document.querySelector(".new-game");
 const rollDiceButton = document.querySelector(".roll-dice");
 const holdButton = document.querySelector(".hold");
-const settingsButton = document.querySelector(".settings-button");
+const settingsForm = document.querySelector(".settings-content form")
+// const settingsButton = document.querySelector(".settings-button");
 const audio = document.querySelector("audio");
 const winScore = 10;
 let currentScore = 0;
@@ -19,11 +21,12 @@ const settings = initSettings();
 newGameButton.addEventListener("click", onStartNewGameBtnClick);
 rollDiceButton.addEventListener("click", onRollDiceBtnClick);
 holdButton.addEventListener("click", onHoldBtnClick);
-settingsButton.addEventListener("click", onSettingsBtnClick);
+settingsForm.addEventListener("submit", onSubmitSettingsForm);
+// settingsButton.addEventListener("click", onSettingsBtnClick);
 newGameButton.addEventListener("mouseenter", onMouseEnter);
 rollDiceButton.addEventListener("mouseenter", onMouseEnter);
 holdButton.addEventListener("mouseenter", onMouseEnter);
-settingsButton.addEventListener("mouseenter", onMouseEnter);
+// settingsButton.addEventListener("mouseenter", onMouseEnter);
 audio.addEventListener("mouseenter", onMouseEnter);
 cube.addEventListener("transitionend", onTransitionEnd);
 
@@ -43,12 +46,12 @@ function onStartNewGameBtnClick() {
     resetPlayers();
     resetTotalScore();
     resetCurrentScore();
+    showHideSetings();
     playSound("../assets/sounds/new-game-sound.mp3");
 }
 
 function onRollDiceBtnClick() {  
     cubeSide = rotateCube(cube);
-        
     playSound("../assets/sounds/roll-dice-sound.mp3");
 }
 
@@ -95,9 +98,19 @@ function onHoldBtnClick() {
     playSound("../assets/sounds/hold-sound.mp3");
 }
 
-function onSettingsBtnClick() {
+function showHideSetings() {
     toggleSettings(settings.settingsContainer, settings.settingsContent);
     playSound("../assets/sounds/settings-sound.mp3");
+}
+
+function onSubmitSettingsForm(e) {
+    e.preventDefault();
+    const formData = new FormData(settingsForm);
+    const inputValues = formData.getAll("player-name");
+    playerNames.forEach((name, i) => {
+        name.innerHTML = inputValues[i];
+    });
+    showHideSetings();
 }
 
 function updateCurrentScore(randomNumber) {

@@ -328,26 +328,71 @@ body {
     justify-content: center;
     width: 100%;
     min-height: 100vh;
-    background-color: rgba(0, 0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.5);
     z-index: 10;
+    visibility: hidden;
 }
 
 .settings-container.visible {
-    background-color: rgba(0, 0, 0, 0.5);
+    visibility: visible;
 }
 
 .settings-content {
     position: absolute;
     top: -100%;
-    transition: transform 0.5s;
     width: 30%;
+    padding: 30px;
+    transition: all 1s;
+}
+
+.settings-content form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.settings-content input {
+    height: 30px;
+    font-family: "Orbitron", sans-serif;
+    border-radius: 5px;
+    border: none;
+}
+
+.settings-content input[type="text"] {
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    padding-left: 10px;
+    border: 1px solid #d3d3d3;
+}
+
+.settings-content input[type="submit"] {
+    width: 50%;
+    align-self: center;
+    font-weight: 700;
+    background-color: #fff;
+    color: var(--red);
+    border: 1px solid var(--red);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.settings-content label {
+    font-weight: 700;
+    margin-bottom: 5px;
+    color:#212F3D;
+}
+
+.settings-content input[type="button"]:hover {
+    background-color: var(--red);
+    color: #fff;
 }
 
 .settings-button {
     position: absolute;
     top: 20px;
     right: 20px;
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     cursor: pointer;
